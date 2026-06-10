@@ -1,0 +1,17 @@
+---
+# ansible-lint configuration for sfulmer.haproxy
+
+profile: production
+
+# Skip var-naming[no-role-prefix] - we use clear, scoped variable names
+# without redundant role prefixes for better user experience
+skip_list:
+  - var-naming[no-role-prefix]
+
+# Exclude generated files and vendored code
+exclude_paths:
+  - .github/
+  - .cache/
+  - tests/output/
+
+warn_list: []
