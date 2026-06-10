@@ -1,0 +1,30 @@
+---
+namespace: "sfulmer"
+name: "haproxy"
+version: 0.1.0
+readme: README.md
+authors:
+  - Steve Fulmer <sfulmer@redhat.com>
+
+description: Ansible collection for managing HAProxy load balancers — runtime API operations, configuration management, and deployment roles.
+license_file: LICENSE
+
+tags:
+  - networking
+  - loadbalancer
+  - haproxy
+  - infrastructure
+
+dependencies:
+  "ansible.utils": ">=4.0.0"
+
+repository: https://github.com/stevefulme1/ansible-haproxy
+documentation: https://github.com/stevefulme1/ansible-haproxy/blob/main/README.md
+homepage: https://github.com/stevefulme1/ansible-haproxy
+issues: https://github.com/stevefulme1/ansible-haproxy/issues
+
+build_ignore:
+  - .gitignore
+  - changelogs/.plugin-cache.yaml
+  - tests/
+  - docs/superpowers/
