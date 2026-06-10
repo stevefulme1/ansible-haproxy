@@ -1,0 +1,32 @@
+---
+- name: Monitor HAProxy server health
+  hosts: all
+  sources:
+    - sfulmer.haproxy.haproxy_events:
+        socket: /var/run/haproxy/admin.sock
+        poll_interval: 10
+        connection_threshold: 0.8
+  rules:
+    - name: Server went DOWN
+      condition: event.type == "server_state_change" and event.data.current_status == "DOWN"
+      action:
+        run_playbook:
+          name: respond_to_server_down.yml
+          extra_vars:
+            backend: "{{ event.data.backend }}"
+            server: "{{ event.data.server }}"
+
+    - name: Connection threshold breached
+      condition: event.type == "connection_threshold"
+      action:
+        run_playbook:
+          name: scale_frontend.yml
+          extra_vars:
+            frontend: "{{ event.data.frontend }}"
+            utilization: "{{ event.data.utilization_pct }}"
+
+    - name: Server removed from backend
+      condition: event.type == "server_removed"
+      action:
+        print_event:
+          msg: "Server {{ event.data.server }} removed from {{ event.data.backend }}"
