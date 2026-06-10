@@ -50,32 +50,32 @@ options:
 
 EXAMPLES = """
 - name: Get all HAProxy statistics
-  sfulmer.haproxy.haproxy_stats:
+  stevefulme1.haproxy.haproxy_stats:
     socket: /var/run/haproxy/admin.sock
   register: result
 
 - name: Get only frontend statistics
-  sfulmer.haproxy.haproxy_stats:
+  stevefulme1.haproxy.haproxy_stats:
     socket: /var/run/haproxy/admin.sock
     filter_type: frontend
   register: frontends
 
 - name: Get statistics for specific backend
-  sfulmer.haproxy.haproxy_stats:
+  stevefulme1.haproxy.haproxy_stats:
     socket: /var/run/haproxy/admin.sock
     filter_type: backend
     filter_name: web_backend
   register: backend_stats
 
 - name: Get statistics for specific server
-  sfulmer.haproxy.haproxy_stats:
+  stevefulme1.haproxy.haproxy_stats:
     socket: /var/run/haproxy/admin.sock
     filter_type: server
     filter_server: web_server1
   register: server_stats
 
 - name: Get all servers in a backend
-  sfulmer.haproxy.haproxy_stats:
+  stevefulme1.haproxy.haproxy_stats:
     socket: /var/run/haproxy/admin.sock
     filter_type: server
     filter_name: web_backend
@@ -129,7 +129,7 @@ summary:
 
 from ansible.module_utils.basic import AnsibleModule
 
-from ansible_collections.sfulmer.haproxy.plugins.module_utils.haproxy_socket import (
+from ansible_collections.stevefulme1.haproxy.plugins.module_utils.haproxy_socket import (
     HAProxySocket,
     HAProxySocketError,
 )

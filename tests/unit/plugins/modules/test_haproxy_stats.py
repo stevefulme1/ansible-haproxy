@@ -6,7 +6,7 @@ from unittest.mock import MagicMock, patch
 
 import pytest
 
-from ansible_collections.sfulmer.haproxy.plugins.modules import haproxy_stats
+from ansible_collections.stevefulme1.haproxy.plugins.modules import haproxy_stats
 
 
 @pytest.fixture
@@ -138,7 +138,7 @@ def mock_stats_data():
 
 
 class TestHAProxyStats:
-    @patch("ansible_collections.sfulmer.haproxy.plugins.modules.haproxy_stats.HAProxySocket")
+    @patch("ansible_collections.stevefulme1.haproxy.plugins.modules.haproxy_stats.HAProxySocket")
     def test_get_all_stats(self, mock_socket_class, mock_module, mock_stats_data):
         """Test getting all stats with no filter."""
         mock_client = MagicMock()
@@ -153,7 +153,7 @@ class TestHAProxyStats:
         assert result["summary"]["total_servers"] == 4
         assert not result["changed"]
 
-    @patch("ansible_collections.sfulmer.haproxy.plugins.modules.haproxy_stats.HAProxySocket")
+    @patch("ansible_collections.stevefulme1.haproxy.plugins.modules.haproxy_stats.HAProxySocket")
     def test_filter_frontends(self, mock_socket_class, mock_module, mock_stats_data):
         """Test filtering by frontend type."""
         mock_client = MagicMock()
@@ -167,7 +167,7 @@ class TestHAProxyStats:
         assert all(s["svname"] == "FRONTEND" for s in result["stats"])
         assert result["summary"]["total_frontends"] == 2
 
-    @patch("ansible_collections.sfulmer.haproxy.plugins.modules.haproxy_stats.HAProxySocket")
+    @patch("ansible_collections.stevefulme1.haproxy.plugins.modules.haproxy_stats.HAProxySocket")
     def test_filter_backends(self, mock_socket_class, mock_module, mock_stats_data):
         """Test filtering by backend type."""
         mock_client = MagicMock()
@@ -181,7 +181,7 @@ class TestHAProxyStats:
         assert all(s["svname"] == "BACKEND" for s in result["stats"])
         assert result["summary"]["total_backends"] == 2
 
-    @patch("ansible_collections.sfulmer.haproxy.plugins.modules.haproxy_stats.HAProxySocket")
+    @patch("ansible_collections.stevefulme1.haproxy.plugins.modules.haproxy_stats.HAProxySocket")
     def test_filter_servers(self, mock_socket_class, mock_module, mock_stats_data):
         """Test filtering by server type (excludes FRONTEND/BACKEND)."""
         mock_client = MagicMock()
@@ -195,7 +195,7 @@ class TestHAProxyStats:
         assert all(s["svname"] not in ("FRONTEND", "BACKEND") for s in result["stats"])
         assert result["summary"]["total_servers"] == 4
 
-    @patch("ansible_collections.sfulmer.haproxy.plugins.modules.haproxy_stats.HAProxySocket")
+    @patch("ansible_collections.stevefulme1.haproxy.plugins.modules.haproxy_stats.HAProxySocket")
     def test_filter_by_name(self, mock_socket_class, mock_module, mock_stats_data):
         """Test filtering by specific frontend/backend name."""
         mock_client = MagicMock()
@@ -208,7 +208,7 @@ class TestHAProxyStats:
         assert len(result["stats"]) == 3
         assert all(s["pxname"] == "web_backend" for s in result["stats"])
 
-    @patch("ansible_collections.sfulmer.haproxy.plugins.modules.haproxy_stats.HAProxySocket")
+    @patch("ansible_collections.stevefulme1.haproxy.plugins.modules.haproxy_stats.HAProxySocket")
     def test_filter_by_server(self, mock_socket_class, mock_module, mock_stats_data):
         """Test filtering by specific server name."""
         mock_client = MagicMock()
@@ -222,7 +222,7 @@ class TestHAProxyStats:
         assert len(result["stats"]) == 1
         assert result["stats"][0]["svname"] == "web_server1"
 
-    @patch("ansible_collections.sfulmer.haproxy.plugins.modules.haproxy_stats.HAProxySocket")
+    @patch("ansible_collections.stevefulme1.haproxy.plugins.modules.haproxy_stats.HAProxySocket")
     def test_summary_counts(self, mock_socket_class, mock_module, mock_stats_data):
         """Test that summary counts are correct."""
         mock_client = MagicMock()
@@ -238,7 +238,7 @@ class TestHAProxyStats:
         # Total sessions is sum of all stot
         assert summary["total_sessions"] == 3500
 
-    @patch("ansible_collections.sfulmer.haproxy.plugins.modules.haproxy_stats.HAProxySocket")
+    @patch("ansible_collections.stevefulme1.haproxy.plugins.modules.haproxy_stats.HAProxySocket")
     def test_combined_filters(self, mock_socket_class, mock_module, mock_stats_data):
         """Test combining filter_type and filter_name."""
         mock_client = MagicMock()
@@ -253,7 +253,7 @@ class TestHAProxyStats:
         assert all(s["pxname"] == "api_backend" for s in result["stats"])
         assert all(s["svname"] not in ("FRONTEND", "BACKEND") for s in result["stats"])
 
-    @patch("ansible_collections.sfulmer.haproxy.plugins.modules.haproxy_stats.HAProxySocket")
+    @patch("ansible_collections.stevefulme1.haproxy.plugins.modules.haproxy_stats.HAProxySocket")
     def test_check_mode_supported(self, mock_socket_class, mock_module, mock_stats_data):
         """Test that check mode is supported (read-only module)."""
         mock_client = MagicMock()

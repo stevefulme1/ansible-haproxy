@@ -70,14 +70,14 @@ options:
 
 EXAMPLES = """
 - name: Add basic backend
-  sfulmer.haproxy.haproxy_backend:
+  stevefulme1.haproxy.haproxy_backend:
     name: api_backend
     state: present
     mode: http
     balance: leastconn
 
 - name: Add backend with servers
-  sfulmer.haproxy.haproxy_backend:
+  stevefulme1.haproxy.haproxy_backend:
     name: web_backend
     mode: http
     balance: roundrobin
@@ -93,7 +93,7 @@ EXAMPLES = """
         params: check inter 3s fall 3 rise 2
 
 - name: Remove backend
-  sfulmer.haproxy.haproxy_backend:
+  stevefulme1.haproxy.haproxy_backend:
     name: old_backend
     state: absent
 """
@@ -116,7 +116,7 @@ from pathlib import Path
 
 from ansible.module_utils.basic import AnsibleModule
 
-from ansible_collections.sfulmer.haproxy.plugins.module_utils.haproxy_config_parser import (
+from ansible_collections.stevefulme1.haproxy.plugins.module_utils.haproxy_config_parser import (
     HAProxyConfigParser,
     HAProxyConfigError,
 )

@@ -96,14 +96,14 @@ options:
 
 EXAMPLES = """
 - name: Create a simple HTTP frontend
-  sfulmer.haproxy.haproxy_frontend:
+  stevefulme1.haproxy.haproxy_frontend:
     name: web_front
     bind: "*:80"
     mode: http
     default_backend: web_back
 
 - name: Create HTTPS frontend with multiple binds
-  sfulmer.haproxy.haproxy_frontend:
+  stevefulme1.haproxy.haproxy_frontend:
     name: ssl_front
     bind:
       - "*:80"
@@ -112,7 +112,7 @@ EXAMPLES = """
     default_backend: web_back
 
 - name: Frontend with ACL-based routing
-  sfulmer.haproxy.haproxy_frontend:
+  stevefulme1.haproxy.haproxy_frontend:
     name: api_front
     bind: "*:80"
     mode: http
@@ -129,12 +129,12 @@ EXAMPLES = """
     default_backend: web_back
 
 - name: Remove a frontend
-  sfulmer.haproxy.haproxy_frontend:
+  stevefulme1.haproxy.haproxy_frontend:
     name: old_front
     state: absent
 
 - name: Frontend with custom options
-  sfulmer.haproxy.haproxy_frontend:
+  stevefulme1.haproxy.haproxy_frontend:
     name: custom_front
     bind: "*:80"
     mode: http
@@ -161,7 +161,7 @@ from typing import TYPE_CHECKING
 
 from ansible.module_utils.basic import AnsibleModule
 
-from ansible_collections.sfulmer.haproxy.plugins.module_utils.haproxy_config_parser import (
+from ansible_collections.stevefulme1.haproxy.plugins.module_utils.haproxy_config_parser import (
     HAProxyConfigParser,
     HAProxyConfigError,
 )

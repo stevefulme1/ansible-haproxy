@@ -7,7 +7,7 @@ from unittest.mock import MagicMock, patch
 
 import pytest
 
-from ansible_collections.sfulmer.haproxy.plugins.module_utils.haproxy_socket import (
+from ansible_collections.stevefulme1.haproxy.plugins.module_utils.haproxy_socket import (
     HAProxySocket,
     HAProxySocketError,
 )

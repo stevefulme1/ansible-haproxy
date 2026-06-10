@@ -6,7 +6,7 @@ from unittest.mock import MagicMock, patch
 
 import pytest
 
-from ansible_collections.sfulmer.haproxy.plugins.modules import haproxy_info
+from ansible_collections.stevefulme1.haproxy.plugins.modules import haproxy_info
 
 
 @pytest.fixture
@@ -26,7 +26,7 @@ def mock_module(module_args):
 
 
 class TestHAProxyInfo:
-    @patch("ansible_collections.sfulmer.haproxy.plugins.modules.haproxy_info.HAProxySocket")
+    @patch("ansible_collections.stevefulme1.haproxy.plugins.modules.haproxy_info.HAProxySocket")
     def test_gather_info(self, mock_socket_class, mock_module):
         mock_client = MagicMock()
         mock_socket_class.return_value = mock_client
@@ -49,7 +49,7 @@ class TestHAProxyInfo:
         assert "web_backend" in result["backends"]
         assert "server1" in result["backends"]["web_backend"]["servers"]
 
-    @patch("ansible_collections.sfulmer.haproxy.plugins.modules.haproxy_info.HAProxySocket")
+    @patch("ansible_collections.stevefulme1.haproxy.plugins.modules.haproxy_info.HAProxySocket")
     def test_gather_info_connection_error(self, mock_socket_class, mock_module):
         mock_socket_class.side_effect = Exception("Connection refused")
 

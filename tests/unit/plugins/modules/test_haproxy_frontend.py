@@ -6,7 +6,7 @@ from unittest.mock import MagicMock
 
 import pytest
 
-from ansible_collections.sfulmer.haproxy.plugins.modules import haproxy_frontend
+from ansible_collections.stevefulme1.haproxy.plugins.modules import haproxy_frontend
 
 
 @pytest.fixture

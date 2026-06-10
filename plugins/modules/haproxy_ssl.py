@@ -58,7 +58,7 @@ options:
 
 EXAMPLES = """
 - name: Add or update SSL certificate
-  sfulmer.haproxy.haproxy_ssl:
+  stevefulme1.haproxy.haproxy_ssl:
     cert_name: /etc/haproxy/ssl/example.com.pem
     cert_content: |
       -----BEGIN CERTIFICATE-----
@@ -70,12 +70,12 @@ EXAMPLES = """
     state: present
 
 - name: Remove SSL certificate
-  sfulmer.haproxy.haproxy_ssl:
+  stevefulme1.haproxy.haproxy_ssl:
     cert_name: /etc/haproxy/ssl/example.com.pem
     state: absent
 
 - name: List all SSL certificates
-  sfulmer.haproxy.haproxy_ssl:
+  stevefulme1.haproxy.haproxy_ssl:
     list_certs: true
   register: ssl_certs
 
@@ -109,7 +109,7 @@ from typing import TYPE_CHECKING
 
 from ansible.module_utils.basic import AnsibleModule
 
-from ansible_collections.sfulmer.haproxy.plugins.module_utils.haproxy_socket import (
+from ansible_collections.stevefulme1.haproxy.plugins.module_utils.haproxy_socket import (
     HAProxySocket,
     HAProxySocketError,
 )

@@ -44,23 +44,23 @@ options:
 
 EXAMPLES = """
 - name: Show all entries in a stick table
-  sfulmer.haproxy.haproxy_stick_table:
+  stevefulme1.haproxy.haproxy_stick_table:
     table: web_back
     action: show
 
 - name: Look up a specific key
-  sfulmer.haproxy.haproxy_stick_table:
+  stevefulme1.haproxy.haproxy_stick_table:
     table: web_back
     action: lookup
     key: 10.0.0.1
 
 - name: Clear all entries in a stick table
-  sfulmer.haproxy.haproxy_stick_table:
+  stevefulme1.haproxy.haproxy_stick_table:
     table: web_back
     action: clear
 
 - name: Show stick table entries filtered by gpc0
-  sfulmer.haproxy.haproxy_stick_table:
+  stevefulme1.haproxy.haproxy_stick_table:
     table: web_back
     action: show
     data_type: gpc0
@@ -94,7 +94,7 @@ __metaclass__ = type  # pylint: disable=C0103
 from typing import TYPE_CHECKING
 
 from ansible.module_utils.basic import AnsibleModule  # type: ignore
-from ansible_collections.sfulmer.haproxy.plugins.module_utils.haproxy_socket import (
+from ansible_collections.stevefulme1.haproxy.plugins.module_utils.haproxy_socket import (
     HAProxySocket,
     HAProxySocketError,
 )

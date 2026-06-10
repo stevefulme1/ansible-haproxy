@@ -1,4 +1,4 @@
-"""Unit tests for sfulmer.haproxy."""
+"""Unit tests for stevefulme1.haproxy."""
 
 
 def test_basic() -> None:

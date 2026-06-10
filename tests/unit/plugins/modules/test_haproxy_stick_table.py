@@ -6,7 +6,7 @@ from unittest.mock import MagicMock, patch
 
 import pytest
 
-from ansible_collections.sfulmer.haproxy.plugins.modules import haproxy_stick_table
+from ansible_collections.stevefulme1.haproxy.plugins.modules import haproxy_stick_table
 
 
 @pytest.fixture
@@ -30,7 +30,7 @@ def mock_module(module_args_show):
 
 
 class TestHAProxyStickTable:
-    @patch("ansible_collections.sfulmer.haproxy.plugins.modules.haproxy_stick_table.HAProxySocket")
+    @patch("ansible_collections.stevefulme1.haproxy.plugins.modules.haproxy_stick_table.HAProxySocket")
     def test_show_table(self, mock_socket_class, mock_module):
         mock_client = MagicMock()
         mock_socket_class.return_value = mock_client
@@ -52,7 +52,7 @@ class TestHAProxyStickTable:
         assert result["entries"][0]["gpc0"] == "5"
         assert result["entries"][1]["key"] == "10.0.0.2"
 
-    @patch("ansible_collections.sfulmer.haproxy.plugins.modules.haproxy_stick_table.HAProxySocket")
+    @patch("ansible_collections.stevefulme1.haproxy.plugins.modules.haproxy_stick_table.HAProxySocket")
     def test_lookup_key(self, mock_socket_class, mock_module):
         mock_module.params["action"] = "lookup"
         mock_module.params["key"] = "10.0.0.1"
@@ -69,7 +69,7 @@ class TestHAProxyStickTable:
         assert result["entry_count"] == 1
         assert result["entries"][0]["key"] == "10.0.0.1"
 
-    @patch("ansible_collections.sfulmer.haproxy.plugins.modules.haproxy_stick_table.HAProxySocket")
+    @patch("ansible_collections.stevefulme1.haproxy.plugins.modules.haproxy_stick_table.HAProxySocket")
     def test_clear_table(self, mock_socket_class, mock_module):
         mock_module.params["action"] = "clear"
         mock_client = MagicMock()
@@ -82,7 +82,7 @@ class TestHAProxyStickTable:
         assert result["changed"] is True
         assert result["table"] == "web_back"
 
-    @patch("ansible_collections.sfulmer.haproxy.plugins.modules.haproxy_stick_table.HAProxySocket")
+    @patch("ansible_collections.stevefulme1.haproxy.plugins.modules.haproxy_stick_table.HAProxySocket")
     def test_clear_check_mode(self, mock_socket_class, mock_module):
         mock_module.params["action"] = "clear"
         mock_module.check_mode = True
@@ -95,7 +95,7 @@ class TestHAProxyStickTable:
         assert result["changed"] is True
         assert result["table"] == "web_back"
 
-    @patch("ansible_collections.sfulmer.haproxy.plugins.modules.haproxy_stick_table.HAProxySocket")
+    @patch("ansible_collections.stevefulme1.haproxy.plugins.modules.haproxy_stick_table.HAProxySocket")
     def test_show_empty_table(self, mock_socket_class, mock_module):
         mock_client = MagicMock()
         mock_socket_class.return_value = mock_client
@@ -108,7 +108,7 @@ class TestHAProxyStickTable:
         assert result["entry_count"] == 0
         assert result["entries"] == []
 
-    @patch("ansible_collections.sfulmer.haproxy.plugins.modules.haproxy_stick_table.HAProxySocket")
+    @patch("ansible_collections.stevefulme1.haproxy.plugins.modules.haproxy_stick_table.HAProxySocket")
     def test_show_with_data_type_filter(self, mock_socket_class, mock_module):
         mock_module.params["data_type"] = "gpc0"
         mock_client = MagicMock()

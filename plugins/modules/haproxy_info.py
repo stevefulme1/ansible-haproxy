@@ -29,12 +29,12 @@ options:
 
 EXAMPLES = """
 - name: Gather HAProxy info from Unix socket
-  sfulmer.haproxy.haproxy_info:
+  stevefulme1.haproxy.haproxy_info:
     socket: /var/run/haproxy/admin.sock
   register: haproxy_facts
 
 - name: Gather HAProxy info from TCP socket
-  sfulmer.haproxy.haproxy_info:
+  stevefulme1.haproxy.haproxy_info:
     socket: tcp://127.0.0.1:9999
     timeout: 5
   register: haproxy_facts
@@ -91,7 +91,7 @@ haproxy:
 
 from ansible.module_utils.basic import AnsibleModule
 
-from ansible_collections.sfulmer.haproxy.plugins.module_utils.haproxy_socket import (
+from ansible_collections.stevefulme1.haproxy.plugins.module_utils.haproxy_socket import (
     HAProxySocket,
     HAProxySocketError,
 )

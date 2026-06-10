@@ -8,7 +8,7 @@ import os
 
 import pytest
 
-from ansible_collections.sfulmer.haproxy.plugins.modules import haproxy_config
+from ansible_collections.stevefulme1.haproxy.plugins.modules import haproxy_config
 
 
 class TestRenderConfig:

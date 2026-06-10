@@ -75,38 +75,38 @@ options:
 
 EXAMPLES = """
 - name: Enable server in backend
-  sfulmer.haproxy.haproxy_server:
+  stevefulme1.haproxy.haproxy_server:
     backend: web_backend
     server: server1
     state: enabled
 
 - name: Disable server for maintenance
-  sfulmer.haproxy.haproxy_server:
+  stevefulme1.haproxy.haproxy_server:
     backend: web_backend
     server: server1
     state: disabled
 
 - name: Drain server (no new connections)
-  sfulmer.haproxy.haproxy_server:
+  stevefulme1.haproxy.haproxy_server:
     backend: web_backend
     server: server1
     state: drain
 
 - name: Set server weight
-  sfulmer.haproxy.haproxy_server:
+  stevefulme1.haproxy.haproxy_server:
     backend: web_backend
     server: server1
     weight: 50
 
 - name: Enable server and set weight
-  sfulmer.haproxy.haproxy_server:
+  stevefulme1.haproxy.haproxy_server:
     backend: web_backend
     server: server1
     state: enabled
     weight: 100
 
 - name: Disable server without waiting
-  sfulmer.haproxy.haproxy_server:
+  stevefulme1.haproxy.haproxy_server:
     backend: web_backend
     server: server1
     state: disabled
@@ -131,7 +131,7 @@ from typing import TYPE_CHECKING
 
 from ansible.module_utils.basic import AnsibleModule
 
-from ansible_collections.sfulmer.haproxy.plugins.module_utils.haproxy_socket import (
+from ansible_collections.stevefulme1.haproxy.plugins.module_utils.haproxy_socket import (
     HAProxySocket,
     HAProxySocketError,
 )

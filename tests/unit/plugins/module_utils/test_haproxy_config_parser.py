@@ -4,7 +4,7 @@ from __future__ import absolute_import, annotations, division, print_function
 
 import pytest
 
-from ansible_collections.sfulmer.haproxy.plugins.module_utils.haproxy_config_parser import (
+from ansible_collections.stevefulme1.haproxy.plugins.module_utils.haproxy_config_parser import (
     HAProxyConfigParser,
     HAProxyConfigError,
 )

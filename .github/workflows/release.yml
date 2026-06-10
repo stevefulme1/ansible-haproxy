@@ -1,5 +1,5 @@
 ---
-name: Release sfulmer.haproxy
+name: Release stevefulme1.haproxy
 
 on: # yamllint disable-line rule:truthy
   release:

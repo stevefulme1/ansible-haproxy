@@ -53,7 +53,7 @@ options:
 
 EXAMPLES = """
 - name: Configure HAProxy from structured data
-  sfulmer.haproxy.haproxy_config:
+  stevefulme1.haproxy.haproxy_config:
     dest: /etc/haproxy/haproxy.cfg
     global_section:
       maxconn: 4096
@@ -92,7 +92,7 @@ EXAMPLES = """
             check: true
 
 - name: Configure with ACLs and conditional backends
-  sfulmer.haproxy.haproxy_config:
+  stevefulme1.haproxy.haproxy_config:
     dest: /etc/haproxy/haproxy.cfg
     frontends:
       - name: http_front

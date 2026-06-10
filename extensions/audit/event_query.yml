@@ -10,7 +10,7 @@
 # Modules that only read state (haproxy_info, haproxy_stats) are
 # excluded — they do not manage resources.
 
-sfulmer.haproxy.haproxy_server:
+stevefulme1.haproxy.haproxy_server:
   query: >-
     {
       name: (.backend + "/" + .server),
@@ -22,7 +22,7 @@ sfulmer.haproxy.haproxy_server:
       }
     }
 
-sfulmer.haproxy.haproxy_backend:
+stevefulme1.haproxy.haproxy_backend:
   query: >-
     {
       name: .name,
@@ -34,7 +34,7 @@ sfulmer.haproxy.haproxy_backend:
       }
     }
 
-sfulmer.haproxy.haproxy_frontend:
+stevefulme1.haproxy.haproxy_frontend:
   query: >-
     {
       name: .name,
@@ -46,7 +46,7 @@ sfulmer.haproxy.haproxy_frontend:
       }
     }
 
-sfulmer.haproxy.haproxy_config:
+stevefulme1.haproxy.haproxy_config:
   query: >-
     {
       name: .dest,
@@ -58,7 +58,7 @@ sfulmer.haproxy.haproxy_config:
       }
     }
 
-sfulmer.haproxy.haproxy_acl:
+stevefulme1.haproxy.haproxy_acl:
   query: >-
     {
       name: .acl_name,
@@ -70,7 +70,7 @@ sfulmer.haproxy.haproxy_acl:
       }
     }
 
-sfulmer.haproxy.haproxy_ssl:
+stevefulme1.haproxy.haproxy_ssl:
   query: >-
     {
       name: .cert_name,

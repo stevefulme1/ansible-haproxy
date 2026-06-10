@@ -52,28 +52,28 @@ options:
 
 EXAMPLES = """
 - name: Add IP to blocked_ips ACL
-  sfulmer.haproxy.haproxy_acl:
+  stevefulme1.haproxy.haproxy_acl:
     socket: /var/run/haproxy/admin.sock
     acl_name: blocked_ips
     state: present
     value: 10.0.0.1
 
 - name: Remove IP from blocked_ips ACL
-  sfulmer.haproxy.haproxy_acl:
+  stevefulme1.haproxy.haproxy_acl:
     socket: /var/run/haproxy/admin.sock
     acl_name: blocked_ips
     state: absent
     value: 10.0.0.1
 
 - name: List all entries in blocked_ips ACL
-  sfulmer.haproxy.haproxy_acl:
+  stevefulme1.haproxy.haproxy_acl:
     socket: /var/run/haproxy/admin.sock
     acl_name: blocked_ips
     list_entries: true
   register: acl_entries
 
 - name: Add domain to allowed_domains ACL
-  sfulmer.haproxy.haproxy_acl:
+  stevefulme1.haproxy.haproxy_acl:
     acl_name: allowed_domains
     state: present
     value: example.com
@@ -98,7 +98,7 @@ __metaclass__ = type
 
 from ansible.module_utils.basic import AnsibleModule
 
-from ansible_collections.sfulmer.haproxy.plugins.module_utils.haproxy_socket import (
+from ansible_collections.stevefulme1.haproxy.plugins.module_utils.haproxy_socket import (
     HAProxySocket,
     HAProxySocketError,
 )

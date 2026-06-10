@@ -6,7 +6,7 @@ from unittest.mock import MagicMock, patch
 
 import pytest
 
-from ansible_collections.sfulmer.haproxy.plugins.modules import haproxy_server
+from ansible_collections.stevefulme1.haproxy.plugins.modules import haproxy_server
 
 
 @pytest.fixture
@@ -34,7 +34,7 @@ def mock_module(module_args_enable):
 
 
 class TestHAProxyServer:
-    @patch("ansible_collections.sfulmer.haproxy.plugins.modules.haproxy_server.HAProxySocket")
+    @patch("ansible_collections.stevefulme1.haproxy.plugins.modules.haproxy_server.HAProxySocket")
     def test_enable_server(self, mock_socket_class, mock_module):
         mock_client = MagicMock()
         mock_socket_class.return_value = mock_client
@@ -48,7 +48,7 @@ class TestHAProxyServer:
         mock_client.execute.assert_called_with("enable server web_backend/server1")
         assert result["changed"] is True
 
-    @patch("ansible_collections.sfulmer.haproxy.plugins.modules.haproxy_server.HAProxySocket")
+    @patch("ansible_collections.stevefulme1.haproxy.plugins.modules.haproxy_server.HAProxySocket")
     def test_disable_server(self, mock_socket_class, mock_module):
         mock_module.params["state"] = "disabled"
         mock_client = MagicMock()
@@ -63,7 +63,7 @@ class TestHAProxyServer:
         mock_client.execute.assert_called_with("disable server web_backend/server1")
         assert result["changed"] is True
 
-    @patch("ansible_collections.sfulmer.haproxy.plugins.modules.haproxy_server.HAProxySocket")
+    @patch("ansible_collections.stevefulme1.haproxy.plugins.modules.haproxy_server.HAProxySocket")
     def test_drain_server(self, mock_socket_class, mock_module):
         mock_module.params["state"] = "drain"
         mock_client = MagicMock()
@@ -78,7 +78,7 @@ class TestHAProxyServer:
         mock_client.execute.assert_called_with("set server web_backend/server1 state drain")
         assert result["changed"] is True
 
-    @patch("ansible_collections.sfulmer.haproxy.plugins.modules.haproxy_server.HAProxySocket")
+    @patch("ansible_collections.stevefulme1.haproxy.plugins.modules.haproxy_server.HAProxySocket")
     def test_set_weight(self, mock_socket_class, mock_module):
         mock_module.params["weight"] = 50
         mock_client = MagicMock()
@@ -92,7 +92,7 @@ class TestHAProxyServer:
 
         assert result["changed"] is True
 
-    @patch("ansible_collections.sfulmer.haproxy.plugins.modules.haproxy_server.HAProxySocket")
+    @patch("ansible_collections.stevefulme1.haproxy.plugins.modules.haproxy_server.HAProxySocket")
     def test_already_enabled_no_change(self, mock_socket_class, mock_module):
         mock_client = MagicMock()
         mock_socket_class.return_value = mock_client
@@ -104,7 +104,7 @@ class TestHAProxyServer:
 
         assert result["changed"] is False
 
-    @patch("ansible_collections.sfulmer.haproxy.plugins.modules.haproxy_server.HAProxySocket")
+    @patch("ansible_collections.stevefulme1.haproxy.plugins.modules.haproxy_server.HAProxySocket")
     def test_check_mode(self, mock_socket_class, mock_module):
         mock_module.check_mode = True
         mock_client = MagicMock()

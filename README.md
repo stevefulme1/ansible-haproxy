@@ -1,4 +1,4 @@
-# sfulmer.haproxy
+# stevefulme1.haproxy
 
 Ansible collection for managing HAProxy load balancers, providing comprehensive lifecycle management including installation, configuration, runtime operations, and event-driven automation.
 
@@ -23,14 +23,14 @@ This collection enables you to:
 Install from Ansible Galaxy:
 
 ```bash
-ansible-galaxy collection install sfulmer.haproxy
+ansible-galaxy collection install stevefulme1.haproxy
 ```
 
 Or add to your `requirements.yml`:
 
 ```yaml
 collections:
-  - name: sfulmer.haproxy
+  - name: stevefulme1.haproxy
     version: ">=0.1.0"
 ```
 
@@ -51,12 +51,12 @@ Here's a simple playbook that installs HAProxy and configures a basic load balan
   become: true
   
   roles:
-    - role: sfulmer.haproxy.install
+    - role: stevefulme1.haproxy.install
       vars:
         haproxy_version: "2.8"
         haproxy_install_method: package
     
-    - role: sfulmer.haproxy.configure
+    - role: stevefulme1.haproxy.configure
       vars:
         haproxy_global:
           maxconn: 4096
@@ -103,7 +103,7 @@ Here's a simple playbook that installs HAProxy and configures a basic load balan
 
 ```yaml
 - name: Get HAProxy version and backend status
-  sfulmer.haproxy.haproxy_info:
+  stevefulme1.haproxy.haproxy_info:
     socket: /var/run/haproxy.sock
     gather_subset:
       - version
@@ -120,7 +120,7 @@ Here's a simple playbook that installs HAProxy and configures a basic load balan
 
 ```yaml
 - name: Drain web1 for maintenance
-  sfulmer.haproxy.haproxy_server:
+  stevefulme1.haproxy.haproxy_server:
     socket: /var/run/haproxy.sock
     backend: web_servers
     server: web1
@@ -129,7 +129,7 @@ Here's a simple playbook that installs HAProxy and configures a basic load balan
     wait_timeout: 300
 
 - name: Re-enable web1 after maintenance
-  sfulmer.haproxy.haproxy_server:
+  stevefulme1.haproxy.haproxy_server:
     socket: /var/run/haproxy.sock
     backend: web_servers
     server: web1
@@ -157,7 +157,7 @@ Installs HAProxy using your preferred method (package manager or source compilat
 **Example:**
 
 ```yaml
-- role: sfulmer.haproxy.install
+- role: stevefulme1.haproxy.install
   vars:
     haproxy_version: "2.8"
     haproxy_install_method: package
@@ -180,7 +180,7 @@ Generates `haproxy.cfg` from structured Ansible variables, manages SSL certifica
 **Example:**
 
 ```yaml
-- role: sfulmer.haproxy.configure
+- role: stevefulme1.haproxy.configure
   vars:
     haproxy_global:
       maxconn: 4096
@@ -207,7 +207,7 @@ Monitors HAProxy logs, statistics socket, or admin socket for events and trigger
 - name: HAProxy reactive automation
   hosts: all
   sources:
-    - sfulmer.haproxy.haproxy_events:
+    - stevefulme1.haproxy.haproxy_events:
         socket: /var/run/haproxy.sock
         poll_interval: 10
         events:

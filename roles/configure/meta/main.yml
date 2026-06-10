@@ -18,4 +18,4 @@ galaxy_info:
     - networking
 
 dependencies:
-  - role: sfulmer.haproxy.install
+  - role: stevefulme1.haproxy.install

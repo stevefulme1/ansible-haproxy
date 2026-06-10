@@ -6,7 +6,7 @@ from unittest.mock import MagicMock, call, patch
 
 import pytest
 
-from ansible_collections.sfulmer.haproxy.plugins.modules import haproxy_ssl
+from ansible_collections.stevefulme1.haproxy.plugins.modules import haproxy_ssl
 
 
 @pytest.fixture
@@ -54,7 +54,7 @@ def mock_module(module_args_present):
 
 
 class TestHAProxySSL:
-    @patch("ansible_collections.sfulmer.haproxy.plugins.modules.haproxy_ssl.HAProxySocket")
+    @patch("ansible_collections.stevefulme1.haproxy.plugins.modules.haproxy_ssl.HAProxySocket")
     def test_add_new_cert(self, mock_socket_class, mock_module):
         """Test adding a new SSL certificate."""
         mock_client = MagicMock()
@@ -80,7 +80,7 @@ class TestHAProxySSL:
         assert result["changed"] is True
         assert result["cert_name"] == "/etc/haproxy/ssl/example.com.pem"
 
-    @patch("ansible_collections.sfulmer.haproxy.plugins.modules.haproxy_ssl.HAProxySocket")
+    @patch("ansible_collections.stevefulme1.haproxy.plugins.modules.haproxy_ssl.HAProxySocket")
     def test_update_existing_cert(self, mock_socket_class, mock_module):
         """Test updating an existing SSL certificate."""
         mock_client = MagicMock()
@@ -104,7 +104,7 @@ class TestHAProxySSL:
         assert result["changed"] is True
         assert result["cert_name"] == "/etc/haproxy/ssl/example.com.pem"
 
-    @patch("ansible_collections.sfulmer.haproxy.plugins.modules.haproxy_ssl.HAProxySocket")
+    @patch("ansible_collections.stevefulme1.haproxy.plugins.modules.haproxy_ssl.HAProxySocket")
     def test_remove_cert(self, mock_socket_class, module_args_absent):
         """Test removing an SSL certificate."""
         mock = MagicMock()
@@ -121,7 +121,7 @@ class TestHAProxySSL:
         assert result["changed"] is True
         assert result["cert_name"] == "/etc/haproxy/ssl/example.com.pem"
 
-    @patch("ansible_collections.sfulmer.haproxy.plugins.modules.haproxy_ssl.HAProxySocket")
+    @patch("ansible_collections.stevefulme1.haproxy.plugins.modules.haproxy_ssl.HAProxySocket")
     def test_list_certs(self, mock_socket_class, module_args_list):
         """Test listing all SSL certificates."""
         mock = MagicMock()
@@ -144,7 +144,7 @@ class TestHAProxySSL:
             "/etc/haproxy/ssl/api.example.com.pem",
         ]
 
-    @patch("ansible_collections.sfulmer.haproxy.plugins.modules.haproxy_ssl.HAProxySocket")
+    @patch("ansible_collections.stevefulme1.haproxy.plugins.modules.haproxy_ssl.HAProxySocket")
     def test_check_mode(self, mock_socket_class, mock_module):
         """Test check mode - no commands should be executed."""
         mock_module.check_mode = True
@@ -161,7 +161,7 @@ class TestHAProxySSL:
         assert result["changed"] is True
         assert result["cert_name"] == "/etc/haproxy/ssl/example.com.pem"
 
-    @patch("ansible_collections.sfulmer.haproxy.plugins.modules.haproxy_ssl.HAProxySocket")
+    @patch("ansible_collections.stevefulme1.haproxy.plugins.modules.haproxy_ssl.HAProxySocket")
     def test_list_empty_certs(self, mock_socket_class, module_args_list):
         """Test listing SSL certificates when none exist."""
         mock = MagicMock()

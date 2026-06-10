@@ -71,7 +71,7 @@ examples:
     - name: Monitor HAProxy health
       hosts: all
       sources:
-        - sfulmer.haproxy.haproxy_events:
+        - stevefulme1.haproxy.haproxy_events:
             socket: /var/run/haproxy/admin.sock
             poll_interval: 10
             connection_threshold: 0.8

@@ -6,7 +6,7 @@ from unittest.mock import MagicMock, patch
 
 import pytest
 
-from ansible_collections.sfulmer.haproxy.plugins.modules import haproxy_acl
+from ansible_collections.stevefulme1.haproxy.plugins.modules import haproxy_acl
 
 
 @pytest.fixture
@@ -30,7 +30,7 @@ def mock_module(module_args_present):
 
 
 class TestHAProxyAcl:
-    @patch("ansible_collections.sfulmer.haproxy.plugins.modules.haproxy_acl.HAProxySocket")
+    @patch("ansible_collections.stevefulme1.haproxy.plugins.modules.haproxy_acl.HAProxySocket")
     def test_add_acl_entry(self, mock_socket_class, mock_module):
         """Test adding a new ACL entry that doesn't exist yet."""
         mock_client = MagicMock()
@@ -50,7 +50,7 @@ class TestHAProxyAcl:
         assert result["changed"] is True
         assert "10.0.0.1" in result["entries"]
 
-    @patch("ansible_collections.sfulmer.haproxy.plugins.modules.haproxy_acl.HAProxySocket")
+    @patch("ansible_collections.stevefulme1.haproxy.plugins.modules.haproxy_acl.HAProxySocket")
     def test_add_existing_entry_no_change(self, mock_socket_class, mock_module):
         """Test adding an ACL entry that already exists."""
         mock_client = MagicMock()
@@ -67,7 +67,7 @@ class TestHAProxyAcl:
         assert result["changed"] is False
         assert "10.0.0.1" in result["entries"]
 
-    @patch("ansible_collections.sfulmer.haproxy.plugins.modules.haproxy_acl.HAProxySocket")
+    @patch("ansible_collections.stevefulme1.haproxy.plugins.modules.haproxy_acl.HAProxySocket")
     def test_remove_acl_entry(self, mock_socket_class, mock_module):
         """Test removing an ACL entry that exists."""
         mock_module.params["state"] = "absent"
@@ -87,7 +87,7 @@ class TestHAProxyAcl:
         assert result["changed"] is True
         assert "10.0.0.1" not in result["entries"]
 
-    @patch("ansible_collections.sfulmer.haproxy.plugins.modules.haproxy_acl.HAProxySocket")
+    @patch("ansible_collections.stevefulme1.haproxy.plugins.modules.haproxy_acl.HAProxySocket")
     def test_remove_missing_entry_no_change(self, mock_socket_class, mock_module):
         """Test removing an ACL entry that doesn't exist."""
         mock_module.params["state"] = "absent"
@@ -105,7 +105,7 @@ class TestHAProxyAcl:
         assert result["changed"] is False
         assert "10.0.0.1" not in result["entries"]
 
-    @patch("ansible_collections.sfulmer.haproxy.plugins.modules.haproxy_acl.HAProxySocket")
+    @patch("ansible_collections.stevefulme1.haproxy.plugins.modules.haproxy_acl.HAProxySocket")
     def test_list_acl(self, mock_socket_class, mock_module):
         """Test listing ACL entries."""
         mock_module.params["list_entries"] = True
@@ -125,7 +125,7 @@ class TestHAProxyAcl:
         assert "10.0.0.2" in result["entries"]
         assert "10.0.0.3" in result["entries"]
 
-    @patch("ansible_collections.sfulmer.haproxy.plugins.modules.haproxy_acl.HAProxySocket")
+    @patch("ansible_collections.stevefulme1.haproxy.plugins.modules.haproxy_acl.HAProxySocket")
     def test_check_mode(self, mock_socket_class, mock_module):
         """Test check mode doesn't execute add/del commands."""
         mock_module.check_mode = True
