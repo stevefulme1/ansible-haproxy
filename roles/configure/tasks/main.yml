@@ -1,0 +1,34 @@
+---
+# roles/configure/tasks/main.yml
+
+- name: Create SSL certificate directory
+  ansible.builtin.file:
+    path: "{{ haproxy_ssl_cert_dir }}"
+    state: directory
+    owner: root
+    group: "{{ haproxy_global.group | default('haproxy') }}"
+    mode: "0750"
+  when: haproxy_ssl_certs | length > 0
+
+- name: Deploy SSL certificates
+  ansible.builtin.copy:
+    content: "{{ item.cert }}"
+    dest: "{{ haproxy_ssl_cert_dir }}/{{ item.name }}.pem"
+    owner: root
+    group: "{{ haproxy_global.group | default('haproxy') }}"
+    mode: "0640"
+  loop: "{{ haproxy_ssl_certs }}"
+  loop_control:
+    label: "{{ item.name }}"
+  notify: Reload haproxy
+  no_log: true
+
+- name: Render HAProxy configuration
+  ansible.builtin.template:
+    src: haproxy.cfg.j2
+    dest: "{{ haproxy_config_path }}"
+    owner: root
+    group: "{{ haproxy_global.group | default('haproxy') }}"
+    mode: "0644"
+    validate: "{% if haproxy_config_validate %}haproxy -c -f %s{% endif %}"
+  notify: Reload haproxy

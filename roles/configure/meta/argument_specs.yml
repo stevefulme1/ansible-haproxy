@@ -1,0 +1,47 @@
+---
+argument_specs:
+  main:
+    short_description: Configure HAProxy
+    description:
+      - Render haproxy.cfg from structured variables.
+      - Manage SSL certificates.
+      - Validate configuration before applying.
+    options:
+      haproxy_config_path:
+        type: str
+        default: /etc/haproxy/haproxy.cfg
+        description: Path to the HAProxy configuration file.
+      haproxy_global:
+        type: dict
+        description: Global section configuration.
+      haproxy_defaults:
+        type: dict
+        description: Defaults section configuration.
+      haproxy_frontends:
+        type: list
+        elements: dict
+        default: []
+        description: List of frontend definitions.
+      haproxy_backends:
+        type: list
+        elements: dict
+        default: []
+        description: List of backend definitions.
+      haproxy_listens:
+        type: list
+        elements: dict
+        default: []
+        description: List of listen sections.
+      haproxy_ssl_cert_dir:
+        type: str
+        default: /etc/haproxy/ssl
+        description: Directory for SSL certificates.
+      haproxy_ssl_certs:
+        type: list
+        elements: dict
+        default: []
+        description: List of SSL certificate definitions.
+      haproxy_config_validate:
+        type: bool
+        default: true
+        description: Validate config with haproxy -c before applying.

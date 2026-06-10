@@ -1,0 +1,130 @@
+{# Managed by Ansible — sfulmer.haproxy.configure role #}
+
+global
+{% if haproxy_global.log is defined %}
+{%   for log_entry in haproxy_global.log %}
+    log {{ log_entry }}
+{%   endfor %}
+{% endif %}
+{% if haproxy_global.chroot is defined %}
+    chroot {{ haproxy_global.chroot }}
+{% endif %}
+{% if haproxy_global.stats_socket is defined %}
+    stats socket {{ haproxy_global.stats_socket }}
+{% endif %}
+{% if haproxy_global.stats_timeout is defined %}
+    stats timeout {{ haproxy_global.stats_timeout }}
+{% endif %}
+{% if haproxy_global.user is defined %}
+    user {{ haproxy_global.user }}
+{% endif %}
+{% if haproxy_global.group is defined %}
+    group {{ haproxy_global.group }}
+{% endif %}
+{% if haproxy_global.daemon is defined and haproxy_global.daemon %}
+    daemon
+{% endif %}
+{% if haproxy_global.maxconn is defined %}
+    maxconn {{ haproxy_global.maxconn }}
+{% endif %}
+
+defaults
+{% if haproxy_defaults.log is defined %}
+    log {{ haproxy_defaults.log }}
+{% endif %}
+{% if haproxy_defaults.mode is defined %}
+    mode {{ haproxy_defaults.mode }}
+{% endif %}
+{% if haproxy_defaults.option is defined %}
+{%   for opt in haproxy_defaults.option %}
+    option {{ opt }}
+{%   endfor %}
+{% endif %}
+{% if haproxy_defaults.timeout is defined %}
+{%   for key, value in haproxy_defaults.timeout.items() %}
+    timeout {{ key }} {{ value }}
+{%   endfor %}
+{% endif %}
+{% if haproxy_defaults.retries is defined %}
+    retries {{ haproxy_defaults.retries }}
+{% endif %}
+
+{% for frontend in haproxy_frontends %}
+
+frontend {{ frontend.name }}
+{%   if frontend.bind is defined %}
+{%     if frontend.bind is string %}
+    bind {{ frontend.bind }}
+{%     else %}
+{%       for bind_entry in frontend.bind %}
+    bind {{ bind_entry }}
+{%       endfor %}
+{%     endif %}
+{%   endif %}
+{%   if frontend.mode is defined %}
+    mode {{ frontend.mode }}
+{%   endif %}
+{%   if frontend.option is defined %}
+{%     for opt in frontend.option %}
+    option {{ opt }}
+{%     endfor %}
+{%   endif %}
+{%   if frontend.acls is defined %}
+{%     for acl in frontend.acls %}
+    acl {{ acl.name }} {{ acl.criterion }}
+{%     endfor %}
+{%   endif %}
+{%   if frontend.use_backends is defined %}
+{%     for ub in frontend.use_backends %}
+    use_backend {{ ub.backend }} {{ ub.condition }}
+{%     endfor %}
+{%   endif %}
+{%   if frontend.default_backend is defined %}
+    default_backend {{ frontend.default_backend }}
+{%   endif %}
+{% endfor %}
+
+{% for backend in haproxy_backends %}
+
+backend {{ backend.name }}
+{%   if backend.mode is defined %}
+    mode {{ backend.mode }}
+{%   endif %}
+{%   if backend.balance is defined %}
+    balance {{ backend.balance }}
+{%   endif %}
+{%   if backend.option is defined %}
+{%     for opt in backend.option %}
+    option {{ opt }}
+{%     endfor %}
+{%   endif %}
+{%   if backend.servers is defined %}
+{%     for server in backend.servers %}
+    server {{ server.name }} {{ server.address }} {{ server.params | default('') }}
+{%     endfor %}
+{%   endif %}
+{% endfor %}
+
+{% for listen in haproxy_listens %}
+
+listen {{ listen.name }}
+{%   if listen.bind is defined %}
+    bind {{ listen.bind }}
+{%   endif %}
+{%   if listen.mode is defined %}
+    mode {{ listen.mode }}
+{%   endif %}
+{%   if listen.balance is defined %}
+    balance {{ listen.balance }}
+{%   endif %}
+{%   if listen.option is defined %}
+{%     for opt in listen.option %}
+    option {{ opt }}
+{%     endfor %}
+{%   endif %}
+{%   if listen.servers is defined %}
+{%     for server in listen.servers %}
+    server {{ server.name }} {{ server.address }} {{ server.params | default('') }}
+{%     endfor %}
+{%   endif %}
+{% endfor %}

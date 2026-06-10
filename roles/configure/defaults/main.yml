@@ -1,0 +1,39 @@
+---
+# roles/configure/defaults/main.yml
+
+haproxy_config_path: /etc/haproxy/haproxy.cfg
+
+haproxy_global:
+  log:
+    - "/dev/log local0"
+    - "/dev/log local1 notice"
+  chroot: /var/lib/haproxy
+  stats_socket: /var/run/haproxy/admin.sock mode 660 level admin
+  stats_timeout: 30s
+  user: haproxy
+  group: haproxy
+  daemon: true
+  maxconn: 4096
+
+haproxy_defaults:
+  log: global
+  mode: http
+  option:
+    - httplog
+    - dontlognull
+  timeout:
+    connect: 5000
+    client: 50000
+    server: 50000
+  retries: 3
+
+haproxy_frontends: []
+
+haproxy_backends: []
+
+haproxy_listens: []
+
+haproxy_ssl_cert_dir: /etc/haproxy/ssl
+haproxy_ssl_certs: []
+
+haproxy_config_validate: true
