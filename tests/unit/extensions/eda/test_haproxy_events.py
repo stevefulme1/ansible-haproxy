@@ -5,7 +5,6 @@ from __future__ import absolute_import, annotations, division, print_function
 import sys
 from pathlib import Path
 
-import pytest
 
 # Add extensions path so we can import the EDA plugin directly
 sys.path.insert(0, str(Path(__file__).parents[4] / "extensions" / "eda" / "plugins" / "event_source"))

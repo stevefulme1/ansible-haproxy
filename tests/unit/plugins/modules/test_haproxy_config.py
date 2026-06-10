@@ -2,9 +2,7 @@
 
 from __future__ import absolute_import, annotations, division, print_function
 
-from unittest.mock import MagicMock, mock_open, patch
-import hashlib
-import os
+from unittest.mock import MagicMock
 
 import pytest
 

@@ -2,7 +2,7 @@
 
 from __future__ import absolute_import, annotations, division, print_function
 
-from unittest.mock import MagicMock, patch
+from unittest.mock import MagicMock
 
 import pytest
 
