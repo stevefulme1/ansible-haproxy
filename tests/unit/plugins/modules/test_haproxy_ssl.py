@@ -17,6 +17,7 @@ def module_args_present():
         "state": "present",
         "cert_name": "/etc/haproxy/ssl/example.com.pem",
         "cert_content": "-----BEGIN CERTIFICATE-----\nMIIDXTCCAkWgAwIBAgIJAKZ...\n-----END CERTIFICATE-----",
+        "list_certs": False,
     }
 
 
@@ -28,6 +29,7 @@ def module_args_absent():
         "state": "absent",
         "cert_name": "/etc/haproxy/ssl/example.com.pem",
         "cert_content": None,
+        "list_certs": False,
     }
 
 
@@ -36,9 +38,10 @@ def module_args_list():
     return {
         "socket": "/var/run/haproxy/admin.sock",
         "timeout": 10,
-        "state": "list",
+        "state": "present",
         "cert_name": None,
         "cert_content": None,
+        "list_certs": True,
     }
 
 

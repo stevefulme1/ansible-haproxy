@@ -209,7 +209,7 @@ def main() -> None:
         timeout=dict(type="int", default=10),
         table=dict(type="str", required=True),
         action=dict(type="str", choices=["show", "clear", "lookup"], default="show"),
-        key=dict(type="str"),
+        key=dict(type="str", no_log=False),
         data_type=dict(type="str"),
     )
 

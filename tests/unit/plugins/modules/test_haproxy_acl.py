@@ -17,6 +17,7 @@ def module_args_present():
         "acl_name": "blocked_ips",
         "state": "present",
         "value": "10.0.0.1",
+        "list_entries": False,
     }
 
 
@@ -107,7 +108,7 @@ class TestHAProxyAcl:
     @patch("ansible_collections.sfulmer.haproxy.plugins.modules.haproxy_acl.HAProxySocket")
     def test_list_acl(self, mock_socket_class, mock_module):
         """Test listing ACL entries."""
-        mock_module.params["state"] = "list"
+        mock_module.params["list_entries"] = True
         mock_module.params["value"] = None
         mock_client = MagicMock()
         mock_socket_class.return_value = mock_client

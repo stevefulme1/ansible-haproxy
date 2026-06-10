@@ -157,7 +157,6 @@ config_path:
   sample: "/etc/haproxy/haproxy.cfg"
 """
 
-import subprocess
 from typing import TYPE_CHECKING
 
 from ansible.module_utils.basic import AnsibleModule
@@ -244,32 +243,20 @@ def sections_match(existing_lines: List[str], new_lines: List[str]) -> bool:
     return existing_normalized == new_normalized
 
 
-def validate_config(config_path: str) -> tuple[bool, str]:
+def validate_config(module, config_path: str) -> tuple[bool, str]:
     """Validate HAProxy configuration using haproxy -c.
 
     Args:
+        module: The Ansible module instance.
         config_path: Path to the configuration file.
 
     Returns:
         Tuple of (is_valid, error_message).
     """
-    try:
-        result = subprocess.run(
-            ["haproxy", "-c", "-f", config_path],
-            capture_output=True,
-            text=True,
-            timeout=10,
-        )
-        if result.returncode == 0:
-            return True, ""
-        return False, result.stderr
-    except FileNotFoundError:
-        # haproxy binary not found, skip validation
+    rc, dummy, stderr = module.run_command(["haproxy", "-c", "-f", config_path])
+    if rc == 0:
         return True, ""
-    except subprocess.TimeoutExpired:
-        return False, "Validation timed out"
-    except Exception as e:
-        return False, str(e)
+    return False, stderr
 
 
 def manage_frontend(module: AnsibleModule) -> Dict[str, Any]:
@@ -365,7 +352,7 @@ def manage_frontend(module: AnsibleModule) -> Dict[str, Any]:
             tmp_path = tmp.name
             parser.write(tmp_path)
 
-        is_valid, error_msg = validate_config(tmp_path)
+        is_valid, error_msg = validate_config(module, tmp_path)
 
         # Clean up temp file
         import os

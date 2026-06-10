@@ -33,10 +33,15 @@ options:
       - Desired state of the SSL certificate.
       - C(present) adds or updates the certificate.
       - C(absent) removes the certificate.
-      - C(list) returns a list of all certificates.
     type: str
-    choices: [present, absent, list]
+    choices: [present, absent]
     default: present
+  list_certs:
+    description:
+      - When C(true), return a list of all loaded certificates without making changes.
+      - Overrides I(state) when set.
+    type: bool
+    default: false
   cert_name:
     description:
       - Certificate filename as known to HAProxy.
@@ -49,7 +54,6 @@ options:
       - Required when C(state=present).
       - Should include certificate, intermediate certificates, and private key.
     type: str
-    no_log: true
 """
 
 EXAMPLES = """
@@ -72,7 +76,7 @@ EXAMPLES = """
 
 - name: List all SSL certificates
   sfulmer.haproxy.haproxy_ssl:
-    state: list
+    list_certs: true
   register: ssl_certs
 
 - name: Display certificate list
@@ -95,7 +99,7 @@ certs:
   description: List of all certificate names.
   type: list
   elements: str
-  returned: when state is list
+  returned: when list_certs is true
   sample:
     - "/etc/haproxy/ssl/example.com.pem"
     - "/etc/haproxy/ssl/api.example.com.pem"
@@ -135,8 +139,8 @@ def manage_ssl_cert(module: AnsibleModule) -> Dict[str, Any]:
     except HAProxySocketError as e:
         module.fail_json(msg=f"Failed to connect to HAProxy socket: {e}")
 
-    # Handle list state
-    if state == "list":
+    # Handle list mode
+    if module.params["list_certs"]:
         try:
             output = client.execute("show ssl cert")
             certs = [line.strip() for line in output.strip().split("\n") if line.strip()]
@@ -216,11 +220,12 @@ def main() -> None:
         timeout=dict(type="int", default=10),
         state=dict(
             type="str",
-            choices=["present", "absent", "list"],
+            choices=["present", "absent"],
             default="present",
         ),
         cert_name=dict(type="str"),
         cert_content=dict(type="str", no_log=True),
+        list_certs=dict(type="bool", default=False),
     )
 
     module = AnsibleModule(

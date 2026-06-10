@@ -134,7 +134,6 @@ __metaclass__ = type
 import hashlib
 import os
 import shutil
-import subprocess
 from typing import Any, Dict, List, Optional
 
 from ansible.module_utils.basic import AnsibleModule
@@ -274,21 +273,13 @@ def validate_config(module: AnsibleModule, config_path: str) -> None:
     Raises:
         Calls module.fail_json if validation fails
     """
-    try:
-        result = subprocess.run(
-            ["haproxy", "-c", "-f", config_path],
-            capture_output=True,
-            text=True,
-            check=False
+    rc, stdout, stderr = module.run_command(["haproxy", "-c", "-f", config_path])
+    if rc != 0:
+        module.fail_json(
+            msg=f"HAProxy configuration validation failed: {stderr}",
+            stdout=stdout,
+            stderr=stderr
         )
-        if result.returncode != 0:
-            module.fail_json(
-                msg=f"HAProxy configuration validation failed: {result.stderr}",
-                stdout=result.stdout,
-                stderr=result.stderr
-            )
-    except FileNotFoundError:
-        module.fail_json(msg="haproxy binary not found in PATH")
 
 
 def manage_config(module: AnsibleModule) -> Dict[str, Any]:

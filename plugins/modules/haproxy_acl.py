@@ -34,10 +34,15 @@ options:
       - Desired state of the ACL entry.
       - C(present) adds the value if not already in the ACL.
       - C(absent) removes the value if present in the ACL.
-      - C(list) returns all current ACL entries.
     type: str
-    choices: [present, absent, list]
+    choices: [present, absent]
     default: present
+  list_entries:
+    description:
+      - When C(true), return all current ACL entries without making changes.
+      - Overrides I(state) when set.
+    type: bool
+    default: false
   value:
     description:
       - ACL entry value to add or remove.
@@ -64,7 +69,7 @@ EXAMPLES = """
   sfulmer.haproxy.haproxy_acl:
     socket: /var/run/haproxy/admin.sock
     acl_name: blocked_ips
-    state: list
+    list_entries: true
   register: acl_entries
 
 - name: Add domain to allowed_domains ACL
@@ -147,6 +152,7 @@ def manage_acl(module):
     acl_name = module.params["acl_name"]
     state = module.params["state"]
     value = module.params["value"]
+    list_entries = module.params["list_entries"]
 
     try:
         client = HAProxySocket(socket_path, timeout)
@@ -154,7 +160,7 @@ def manage_acl(module):
         # Get current entries
         current_entries = get_acl_entries(client, acl_name)
 
-        if state == "list":
+        if list_entries:
             return {
                 "changed": False,
                 "entries": current_entries,
@@ -214,8 +220,9 @@ def main():
         socket=dict(type="str", default="/var/run/haproxy/admin.sock"),
         timeout=dict(type="int", default=10),
         acl_name=dict(type="str", required=True),
-        state=dict(type="str", default="present", choices=["present", "absent", "list"]),
+        state=dict(type="str", default="present", choices=["present", "absent"]),
         value=dict(type="str"),
+        list_entries=dict(type="bool", default=False),
     )
 
     module = AnsibleModule(

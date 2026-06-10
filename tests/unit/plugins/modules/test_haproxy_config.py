@@ -177,6 +177,7 @@ class TestHAProxyConfigModule:
         mock = MagicMock()
         mock.params = module_args_basic
         mock.check_mode = False
+        mock.run_command.return_value = (0, "", "")
         return mock
 
     def test_changed_when_different(self, mock_module, tmp_path):
@@ -252,35 +253,24 @@ class TestHAProxyConfigModule:
         assert result["changed"] is True
         assert not backup_file.exists()
 
-    @patch("subprocess.run")
-    def test_validation_success(self, mock_run, mock_module, tmp_path):
+    def test_validation_success(self, mock_module, tmp_path):
         """Test that validation runs when enabled"""
         config_file = tmp_path / "haproxy.cfg"
         mock_module.params["dest"] = str(config_file)
         mock_module.params["validate"] = True
-
-        # Mock successful validation
-        mock_run.return_value = MagicMock(returncode=0, stdout="Configuration file is valid")
+        mock_module.run_command.return_value = (0, "Configuration file is valid", "")
 
         result = haproxy_config.manage_config(mock_module)
 
         assert result["changed"] is True
-        mock_run.assert_called()
+        mock_module.run_command.assert_called()
 
-    @patch("subprocess.run")
-    def test_validation_failure(self, mock_run, mock_module, tmp_path):
+    def test_validation_failure(self, mock_module, tmp_path):
         """Test that validation failure raises error"""
         config_file = tmp_path / "haproxy.cfg"
         mock_module.params["dest"] = str(config_file)
         mock_module.params["validate"] = True
+        mock_module.run_command.return_value = (1, "", "[ALERT] parsing error")
 
-        # Mock failed validation
-        mock_run.return_value = MagicMock(
-            returncode=1,
-            stdout="",
-            stderr="[ALERT] parsing error"
-        )
-
-        # Should call module.fail_json
         haproxy_config.manage_config(mock_module)
         mock_module.fail_json.assert_called()
