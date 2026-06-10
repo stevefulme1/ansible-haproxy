@@ -1,0 +1,83 @@
+---
+# extensions/audit/event_query.yml
+# Maps module return values to the AAP Normalized Resource Taxonomy
+# for indirect node counting.
+#
+# HAProxy modules manage load balancer resources (frontends, backends,
+# servers, ACLs, SSL certs).  The HAProxy instance itself is the
+# managed node.  Backends and frontends are sub-resources of that node.
+#
+# Modules that only read state (haproxy_info, haproxy_stats) are
+# excluded — they do not manage resources.
+
+sfulmer.haproxy.haproxy_server:
+  query: >-
+    {
+      name: (.backend + "/" + .server),
+      canonical_facts: {
+        uuid: (.backend + "/" + .server)
+      },
+      facts: {
+        device_type: "load_balancer"
+      }
+    }
+
+sfulmer.haproxy.haproxy_backend:
+  query: >-
+    {
+      name: .name,
+      canonical_facts: {
+        uuid: .name
+      },
+      facts: {
+        device_type: "load_balancer"
+      }
+    }
+
+sfulmer.haproxy.haproxy_frontend:
+  query: >-
+    {
+      name: .name,
+      canonical_facts: {
+        uuid: .name
+      },
+      facts: {
+        device_type: "load_balancer"
+      }
+    }
+
+sfulmer.haproxy.haproxy_config:
+  query: >-
+    {
+      name: .dest,
+      canonical_facts: {
+        uuid: .dest
+      },
+      facts: {
+        device_type: "load_balancer"
+      }
+    }
+
+sfulmer.haproxy.haproxy_acl:
+  query: >-
+    {
+      name: .acl_name,
+      canonical_facts: {
+        uuid: .acl_name
+      },
+      facts: {
+        device_type: "load_balancer"
+      }
+    }
+
+sfulmer.haproxy.haproxy_ssl:
+  query: >-
+    {
+      name: .cert_name,
+      canonical_facts: {
+        uuid: .cert_name
+      },
+      facts: {
+        device_type: "load_balancer"
+      }
+    }
