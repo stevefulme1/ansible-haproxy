@@ -1,0 +1,4 @@
+---
+haproxy_source_build_deps:
+  - gcc
+  - make

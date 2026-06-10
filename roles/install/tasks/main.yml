@@ -1,0 +1,78 @@
+---
+# roles/install/tasks/main.yml
+
+- name: Include OS-specific variables
+  ansible.builtin.include_vars: "{{ item }}"
+  with_first_found:
+    - "{{ ansible_distribution | lower }}-{{ ansible_distribution_major_version }}.yml"
+    - "{{ ansible_os_family | lower }}.yml"
+    - default.yml
+
+- name: Install HAProxy from package
+  when: haproxy_install_method == "package"
+  block:
+    - name: Install HAProxy package
+      ansible.builtin.package:
+        name: "{{ haproxy_package_name }}{% if haproxy_version %}-{{ haproxy_version }}{% endif %}"
+        state: present
+
+- name: Install HAProxy from source
+  when: haproxy_install_method == "source"
+  block:
+    - name: Install build dependencies
+      ansible.builtin.package:
+        name: "{{ haproxy_source_build_deps }}"
+        state: present
+
+    - name: Download HAProxy source
+      ansible.builtin.get_url:
+        url: "{{ haproxy_source_url }}"
+        dest: "/tmp/haproxy-{{ haproxy_source_version }}.tar.gz"
+        mode: "0644"
+
+    - name: Extract HAProxy source
+      ansible.builtin.unarchive:
+        src: "/tmp/haproxy-{{ haproxy_source_version }}.tar.gz"
+        dest: "{{ haproxy_source_build_dir }}"
+        remote_src: true
+        creates: "{{ haproxy_source_build_dir }}/haproxy-{{ haproxy_source_version }}"
+
+    - name: Build HAProxy
+      community.general.make:
+        chdir: "{{ haproxy_source_build_dir }}/haproxy-{{ haproxy_source_version }}"
+        params: "{{ haproxy_source_make_args }}"
+
+    - name: Install HAProxy binary
+      community.general.make:
+        chdir: "{{ haproxy_source_build_dir }}/haproxy-{{ haproxy_source_version }}"
+        target: install
+
+- name: Create HAProxy user
+  ansible.builtin.user:
+    name: "{{ haproxy_user }}"
+    group: "{{ haproxy_group }}"
+    system: true
+    shell: /sbin/nologin
+    create_home: false
+
+- name: Create socket directory
+  ansible.builtin.file:
+    path: "{{ haproxy_socket_path | dirname }}"
+    state: directory
+    owner: "{{ haproxy_socket_owner }}"
+    group: "{{ haproxy_socket_group }}"
+    mode: "0755"
+
+- name: Create config directory
+  ansible.builtin.file:
+    path: "{{ haproxy_config_path | dirname }}"
+    state: directory
+    owner: root
+    group: "{{ haproxy_group }}"
+    mode: "0755"
+
+- name: Enable and start HAProxy service
+  ansible.builtin.service:
+    name: haproxy
+    enabled: "{{ haproxy_service_enabled }}"
+    state: "{{ haproxy_service_state }}"

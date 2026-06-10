@@ -1,0 +1,27 @@
+---
+# roles/install/meta/argument_specs.yml
+
+argument_specs:
+  main:
+    short_description: Install HAProxy
+    description:
+      - Install HAProxy from package manager or source.
+      - Configures systemd service, stats socket, and user/group.
+    options:
+      haproxy_install_method:
+        type: str
+        default: package
+        choices: [package, source]
+        description: Installation method.
+      haproxy_version:
+        type: str
+        default: ""
+        description: Package version to install. Empty for latest.
+      haproxy_socket_path:
+        type: str
+        default: /var/run/haproxy/admin.sock
+        description: Path to the HAProxy admin socket.
+      haproxy_service_enabled:
+        type: bool
+        default: true
+        description: Enable HAProxy service at boot.

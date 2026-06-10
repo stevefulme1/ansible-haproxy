@@ -1,0 +1,19 @@
+---
+# roles/install/defaults/main.yml
+
+haproxy_version: ""
+haproxy_install_method: package
+haproxy_package_name: haproxy
+haproxy_service_enabled: true
+haproxy_service_state: started
+haproxy_socket_path: /var/run/haproxy/admin.sock
+haproxy_socket_mode: "660"
+haproxy_socket_owner: haproxy
+haproxy_socket_group: haproxy
+haproxy_user: haproxy
+haproxy_group: haproxy
+haproxy_config_path: /etc/haproxy/haproxy.cfg
+haproxy_source_version: "2.8.3"
+haproxy_source_url: "https://www.haproxy.org/download/{{ haproxy_source_version.split('.')[:2] | join('.') }}/src/haproxy-{{ haproxy_source_version }}.tar.gz"
+haproxy_source_build_dir: /usr/local/src/haproxy
+haproxy_source_make_args: "TARGET=linux-glibc USE_OPENSSL=1 USE_ZLIB=1 USE_PCRE2=1"

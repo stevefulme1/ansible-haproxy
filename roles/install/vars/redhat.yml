@@ -1,0 +1,8 @@
+---
+haproxy_source_build_deps:
+  - gcc
+  - make
+  - openssl-devel
+  - pcre2-devel
+  - zlib-devel
+  - systemd-devel
