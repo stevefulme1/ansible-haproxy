@@ -298,8 +298,6 @@ async def main(queue: asyncio.Queue, args: dict[str, Any]):
 
 if __name__ == "__main__":
     # Simple CLI test for the detection logic
-    import sys
-
     print("Testing _detect_changes...")
 
     previous = [
