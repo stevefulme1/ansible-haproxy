@@ -28,5 +28,4 @@
     - name: Server removed from backend
       condition: event.type == "server_removed"
       action:
-        print_event:
-          msg: "Server {{ event.data.server }} removed from {{ event.data.backend }}"
+        print_event: {}
